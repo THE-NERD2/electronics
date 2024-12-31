@@ -20,28 +20,29 @@ function electronics.register_wire(name, def)
         fixed = {{-0.5, -0.5, -0.5, 0.5, -0.4, 0.5}}
     }
     for _, port in ipairs(def.ports) do
-        if port == "xm" then
+        if port == "-x" then
             table.insert(connect_sides, "left")
             node_box.connect_left = {{-0.5, -0.5, -c, -c, -0.5 + c, c}}
-        elseif port == "xp" then
+        elseif port == "+x" then
             table.insert(connect_sides, "right")
             node_box.connect_right = {{c, -0.5, -c, 0.5, -0.5 + c, c}}
-        elseif port == "zm" then
+        elseif port == "-z" then
             table.insert(connect_sides, "back")
             node_box.connect_back = {{-c, -0.5, 0.5, c, -0.5 + c, c}}
-        elseif port == "zp" then
+        elseif port == "+z" then
             table.insert(connect_sides, "front")
             node_box.connect_front = {{-c, -0.5, -c, c, -0.5 + c, -0.5}}
-        elseif port == "yp" then
+        elseif port == "+y" then
             table.insert(connect_sides, "top")
             node_box.connect_top = {{-c, -0.5 + c, -c, c, 0.5, c}}
-            selection_box.connect_top = {{-0.5, -0.4, -0.5, 0.5, 0.5, 0.5}}
+            selection_box.connect_top = {{-2 * c, -0.4, -2 * c, 2 * c, 0.5, 2 * c}}
         end
     end
     minetest.register_node(name, {
         description = def.description,
         groups = {cracky = 3},
         paramtype = "light",
+        paramtype2 = "facedir",
         drawtype = "nodebox",
         tiles = {def.texture},
         connect_sides = connect_sides,
