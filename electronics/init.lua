@@ -15,6 +15,10 @@ function electronics.register_wire(name, def)
         type = "connected",
         fixed = {{-c, -0.5, -c, c, -0.5 + c, c}}
     }
+    local selection_box = {
+        type = "connected",
+        fixed = {{-0.5, -0.5, -0.5, 0.5, -0.4, 0.5}}
+    }
     for _, port in ipairs(def.ports) do
         if port == "xm" then
             table.insert(connect_sides, "left")
@@ -28,6 +32,10 @@ function electronics.register_wire(name, def)
         elseif port == "zp" then
             table.insert(connect_sides, "front")
             node_box.connect_front = {{-c, -0.5, -c, c, -0.5 + c, -0.5}}
+        elseif port == "yp" then
+            table.insert(connect_sides, "top")
+            node_box.connect_top = {{-c, -0.5 + c, -c, c, 0.5, c}}
+            selection_box.connect_top = {{-0.5, -0.4, -0.5, 0.5, 0.5, 0.5}}
         end
     end
     minetest.register_node(name, {
@@ -43,9 +51,6 @@ function electronics.register_wire(name, def)
             type = "fixed",
             fixed = {{0, 0, 0, 0, 0, 0}}
         },
-        selection_box = {
-            type = "fixed",
-            fixed = {{-0.5, -0.5, -0.5, 0.5, -0.1, 0.5}}
-        }
+        selection_box = selection_box
     })
 end
